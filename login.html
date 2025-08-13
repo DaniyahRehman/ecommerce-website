@@ -18,14 +18,15 @@
       background: rgb(220, 239, 245);
       padding: 20px 40px;
       border-radius: 8px;
-      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
       width: 300px;
       text-align: center;
     }
+    h2 { margin-top: 0; }
     label {
       text-align: left;
       display: block;
-      font-weight: normal;
+      font-weight: normal; /* not bold */
     }
     input[type="email"],
     input[type="password"] {
@@ -39,11 +40,11 @@
     .btn-container {
       margin-top: 15px;
       display: flex;
-      justify-content: center; /* Center Verify button by default */
+      justify-content: center; /* center Verify by default */
     }
     .btn-container.two-buttons {
       justify-content: center;
-      gap: 5px; /* 5px gap when both buttons are visible */
+      gap: 5px; /* 5px distance when both buttons show */
     }
     button {
       padding: 10px 20px;
@@ -53,16 +54,12 @@
       border-radius: 4px;
       cursor: pointer;
     }
-    button:hover {
-      background-color: #0056b3;
-    }
+    button:hover { background-color: #0056b3; }
     .signup-btn {
       background-color: #28a745;
-      display: none; /* hidden by default */
+      display: none; /* hidden until user-not-found */
     }
-    .signup-btn:hover {
-      background-color: #1e7e34;
-    }
+    .signup-btn:hover { background-color: #1e7e34; }
     .error {
       color: red;
       font-size: 0.8em;
@@ -71,7 +68,6 @@
     #result {
       margin-top: 20px;
       font-weight: normal;
-      color: red;
     }
     .set-check {
       border: none;
@@ -84,6 +80,7 @@
 <body>
   <div class="container">
     <h2>Login Form</h2>
+
     <form id="loginForm">
       <label for="email">Email:</label>
       <input type="email" id="email" name="email" required />
@@ -98,7 +95,7 @@
         <label for="user_agree_to_terms">
           I agree with Styloopers
           <a target="_blank" href="/terms">Terms of Service</a>,
-          <a target="_blank" href="/privacy">Privacy Policy</a>, and default
+          <a target="_blank" href="/privacy">Privacy Policy</a>, and
           <a target="_blank" href="/notifications">Notification Settings</a>
         </label>
         <small id="termsError" class="error"></small>
@@ -109,6 +106,7 @@
         <button type="button" id="signupBtn" class="signup-btn">Sign Up</button>
       </div>
     </form>
+
     <div id="result"></div>
   </div>
 
@@ -123,16 +121,17 @@
       storageBucket: "e-commerce-login-d7c72.firebasestorage.app",
       messagingSenderId: "969806679812",
       appId: "1:969806679812:web:148888fd752dc1e4670a51",
-      measurementId: "G-8TK2L0SCZJ",
+      measurementId: "G-8TK2L0SCZJ"
     };
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
+    const form = document.getElementById("loginForm");
     const signupBtn = document.getElementById("signupBtn");
     const btnContainer = document.getElementById("btnContainer");
 
-    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+    form.addEventListener("submit", async (event) => {
       event.preventDefault();
 
       const email = document.getElementById("email").value.trim();
@@ -143,60 +142,60 @@
       const termsError = document.getElementById("termsError");
       const resultDiv = document.getElementById("result");
 
+      // clear messages
+      [emailError, passwordError, termsError].forEach(el => { el.textContent = ""; el.style.display = "none"; });
+      resultDiv.textContent = "";
+      resultDiv.style.color = "";
+
       let isValid = true;
 
-      // Email validation
-      const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      // ✅ FIXED REGEX (single backslashes in regex literal)
+      const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+
       if (!emailPattern.test(email)) {
         emailError.textContent = "Please enter a valid email address.";
         emailError.style.display = "block";
         isValid = false;
-      } else {
-        emailError.style.display = "none";
       }
 
-      // Password validation
       if (password.length < 8) {
         passwordError.textContent = "Password must be at least 8 characters long.";
         passwordError.style.display = "block";
         isValid = false;
-      } else {
-        passwordError.style.display = "none";
       }
 
-      // Terms validation
       if (!termsCheckbox.checked) {
         termsError.textContent = "You must agree to the Terms and Conditions.";
         termsError.style.display = "block";
         isValid = false;
-      } else {
-        termsError.style.display = "none";
       }
 
       if (!isValid) return;
 
       try {
         await signInWithEmailAndPassword(auth, email, password);
+        // success
         resultDiv.style.color = "green";
-        resultDiv.innerHTML = "User Verified! Redirecting...";
+        resultDiv.textContent = "User Verified! Redirecting...";
         signupBtn.style.display = "none";
         btnContainer.classList.remove("two-buttons");
         setTimeout(() => {
           window.location.href = "forms.html";
         }, 1200);
       } catch (err) {
+        // user not found / invalid credential → show Sign Up next to Verify
         if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-          resultDiv.innerHTML = "User not found! Please sign up first.";
+          resultDiv.style.color = "red";
+          resultDiv.textContent = "User not found! Please sign up first.";
           signupBtn.style.display = "inline-block";
           btnContainer.classList.add("two-buttons");
-          signupBtn.onclick = () => {
-            window.location.href = "index.html";
-          };
+          signupBtn.onclick = () => window.location.href = "index.html";
         } else if (err.code === "auth/wrong-password") {
           passwordError.textContent = "Incorrect password.";
           passwordError.style.display = "block";
         } else {
-          resultDiv.innerHTML = `Error: ${err.message}`;
+          resultDiv.style.color = "red";
+          resultDiv.textContent = `Error: ${err.message}`;
         }
       }
     });
