@@ -305,21 +305,22 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                resultDiv.innerHTML = '<p style="color: green;">✅ User Verified! Redirecting...</p>';
+                resultDiv.innerHTML = '<p style="color: green;">User Verified! Redirecting...</p>';
                 setTimeout(() => {
                     window.location.href = "forms.html";
                 }, 1200);
             } catch (err) {
-                if (err.code === "auth/user-not-found") {
-                    alert("Account not found. Redirecting to registration.");
+                if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+                    alert("User not found. Please sign up first.");
                     window.location.href = "register.html";
                 } else if (err.code === "auth/wrong-password") {
                     passwordError.textContent = "Incorrect password.";
                     passwordError.style.display = "block";
                 } else {
-                    resultDiv.innerHTML = `<p style="color:red">${err.message}</p>`;
+                    resultDiv.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
                 }
             }
+
         });
     </script>
 </body>
