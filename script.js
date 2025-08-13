@@ -42,7 +42,7 @@ const products=[
             id:7,
             title: "Angel & Rocket",
             price: 1599,
-            image: "https://th.bing.com/th/id/OIP.HCLvFP1xwvOHlB8J1eiixwAAAA?rs=1&pid=ImgDetMain"
+            image: "https://angelandrocket.in/cdn/shop/files/AR0020__2.jpg?v=1750142929&width=800"
         },
         {
             id:8,
