@@ -1,198 +1,205 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login Form</title>
-    <style>
-        body {
-            font-family: Arial, sans-serif;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            height: 100vh;
-            background-color: #89a8e7;
-            margin: 0;
-        }
-        .container {
-            background: rgb(220, 239, 245);
-            padding: 20px 40px;
-            border-radius: 8px;
-            box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-            width: 300px;
-            text-align: center;
-        }
-        label {
-            text-align: left;
-            display: block;
-            font-weight: normal; /* not bold */
-        }
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 8px;
-            margin-top: 5px;
-            margin-bottom: 5px;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-        }
-        .btn-container {
-            display: flex;
-            justify-content: space-between;
-            margin-top: 15px;
-        }
-        button {
-            padding: 10px 20px;
-            background-color: #007BFF;
-            color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
-        }
-        button:hover {
-            background-color: #0056b3;
-        }
-        .signup-btn {
-            background-color: #28a745;
-        }
-        .signup-btn:hover {
-            background-color: #1e7e34;
-        }
-        .error {
-            color: red;
-            font-size: 0.8em;
-            display: none;
-        }
-        #result {
-            margin-top: 20px;
-            font-weight: normal;
-            color: red;
-        }
-        .set-check {
-            border: none;
-            font-size: small;
-            font-weight: 300;
-            text-align: left;
-        }
-    </style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Login Form</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      background-color: #89a8e7;
+      margin: 0;
+    }
+    .container {
+      background: rgb(220, 239, 245);
+      padding: 20px 40px;
+      border-radius: 8px;
+      box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+      width: 300px;
+      text-align: center;
+    }
+    label {
+      text-align: left;
+      display: block;
+      font-weight: normal;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      margin-bottom: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    .btn-container {
+      margin-top: 15px;
+      display: flex;
+      justify-content: center; /* Center Verify button by default */
+    }
+    .btn-container.two-buttons {
+      justify-content: center;
+      gap: 5px; /* 5px gap when both buttons are visible */
+    }
+    button {
+      padding: 10px 20px;
+      background-color: #007BFF;
+      color: white;
+      border: none;
+      border-radius: 4px;
+      cursor: pointer;
+    }
+    button:hover {
+      background-color: #0056b3;
+    }
+    .signup-btn {
+      background-color: #28a745;
+      display: none; /* hidden by default */
+    }
+    .signup-btn:hover {
+      background-color: #1e7e34;
+    }
+    .error {
+      color: red;
+      font-size: 0.8em;
+      display: none;
+    }
+    #result {
+      margin-top: 20px;
+      font-weight: normal;
+      color: red;
+    }
+    .set-check {
+      border: none;
+      font-size: small;
+      font-weight: 300;
+      text-align: left;
+    }
+  </style>
 </head>
 <body>
-    <div class="container">
-        <h2>Login Form</h2>
-        <form id="loginForm">
-            <label for="email">Email:</label>
-            <input type="email" id="email" name="email" required>
-            <small id="emailError" class="error"></small>
+  <div class="container">
+    <h2>Login Form</h2>
+    <form id="loginForm">
+      <label for="email">Email:</label>
+      <input type="email" id="email" name="email" required />
+      <small id="emailError" class="error"></small>
 
-            <label for="password">Password:</label>
-            <input type="password" id="password" name="password" required>
-            <small id="passwordError" class="error"></small>
+      <label for="password">Password:</label>
+      <input type="password" id="password" name="password" required />
+      <small id="passwordError" class="error"></small>
 
-            <fieldset class="set-check">
-                <input type="checkbox" id="user_agree_to_terms" name="user[agree_to_terms]"> 
-                <label for="user_agree_to_terms"> 
-                    I agree with Styloopers 
-                    <a target="_blank" href="/terms">Terms of Service</a>,
-                    <a target="_blank" href="/privacy">Privacy Policy</a>,
-                    and default 
-                    <a target="_blank" href="/notifications">Notification Settings</a>
-                </label>
-                <small id="termsError" class="error"></small>
-            </fieldset>
+      <fieldset class="set-check">
+        <input type="checkbox" id="user_agree_to_terms" name="user[agree_to_terms]" />
+        <label for="user_agree_to_terms">
+          I agree with Styloopers
+          <a target="_blank" href="/terms">Terms of Service</a>,
+          <a target="_blank" href="/privacy">Privacy Policy</a>, and default
+          <a target="_blank" href="/notifications">Notification Settings</a>
+        </label>
+        <small id="termsError" class="error"></small>
+      </fieldset>
 
-            <div class="btn-container">
-                <button type="submit">Verify</button>
-                <button type="button" id="signupBtn" class="signup-btn" style="display:none;">Sign Up</button>
-            </div>
-        </form>
-        <div id="result"></div>
-    </div>
+      <div class="btn-container" id="btnContainer">
+        <button type="submit" id="verifyBtn">Verify</button>
+        <button type="button" id="signupBtn" class="signup-btn">Sign Up</button>
+      </div>
+    </form>
+    <div id="result"></div>
+  </div>
 
-    <script type="module">
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-        import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getAuth, signInWithEmailAndPassword } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-auth.js";
 
-        const firebaseConfig = {
-            apiKey: "AIzaSyD8cbd1LBdtb3TJN5pWpcaVHMLyQa-Yajk",
-            authDomain: "e-commerce-login-d7c72.firebaseapp.com",
-            projectId: "e-commerce-login-d7c72",
-            storageBucket: "e-commerce-login-d7c72.firebasestorage.app",
-            messagingSenderId: "969806679812",
-            appId: "1:969806679812:web:148888fd752dc1e4670a51",
-            measurementId: "G-8TK2L0SCZJ"
-        };
+    const firebaseConfig = {
+      apiKey: "AIzaSyD8cbd1LBdtb3TJN5pWpcaVHMLyQa-Yajk",
+      authDomain: "e-commerce-login-d7c72.firebaseapp.com",
+      projectId: "e-commerce-login-d7c72",
+      storageBucket: "e-commerce-login-d7c72.firebasestorage.app",
+      messagingSenderId: "969806679812",
+      appId: "1:969806679812:web:148888fd752dc1e4670a51",
+      measurementId: "G-8TK2L0SCZJ",
+    };
 
-        const app = initializeApp(firebaseConfig);
-        const auth = getAuth(app);
+    const app = initializeApp(firebaseConfig);
+    const auth = getAuth(app);
 
-        const signupBtn = document.getElementById("signupBtn");
+    const signupBtn = document.getElementById("signupBtn");
+    const btnContainer = document.getElementById("btnContainer");
 
-        document.getElementById('loginForm').addEventListener('submit', async function(event) {
-            event.preventDefault();
+    document.getElementById("loginForm").addEventListener("submit", async function (event) {
+      event.preventDefault();
 
-            const email = document.getElementById('email').value.trim();
-            const password = document.getElementById('password').value.trim();
-            const emailError = document.getElementById('emailError');
-            const passwordError = document.getElementById('passwordError');
-            const termsCheckbox = document.getElementById('user_agree_to_terms');
-            const termsError = document.getElementById('termsError');
-            const resultDiv = document.getElementById('result');
+      const email = document.getElementById("email").value.trim();
+      const password = document.getElementById("password").value.trim();
+      const emailError = document.getElementById("emailError");
+      const passwordError = document.getElementById("passwordError");
+      const termsCheckbox = document.getElementById("user_agree_to_terms");
+      const termsError = document.getElementById("termsError");
+      const resultDiv = document.getElementById("result");
 
-            let isValid = true;
+      let isValid = true;
 
-            // Email validation
-            const emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-            if (!emailPattern.test(email)) {
-                emailError.textContent = "Please enter a valid email address.";
-                emailError.style.display = "block";
-                isValid = false;
-            } else {
-                emailError.style.display = "none";
-            }
+      // Email validation
+      const emailPattern = /^[^\\s@]+@[^\\s@]+\\.[^\\s@]+$/;
+      if (!emailPattern.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        emailError.style.display = "block";
+        isValid = false;
+      } else {
+        emailError.style.display = "none";
+      }
 
-            // Password validation
-            if (password.length < 8) {
-                passwordError.textContent = "Password must be at least 8 characters long.";
-                passwordError.style.display = "block";
-                isValid = false;
-            } else {
-                passwordError.style.display = "none";
-            }
+      // Password validation
+      if (password.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+        passwordError.style.display = "block";
+        isValid = false;
+      } else {
+        passwordError.style.display = "none";
+      }
 
-            // Terms & Conditions validation
-            if (!termsCheckbox.checked) {
-                termsError.textContent = "You must agree to the Terms and Conditions.";
-                termsError.style.display = "block";
-                isValid = false;
-            } else {
-                termsError.style.display = "none";
-            }
+      // Terms validation
+      if (!termsCheckbox.checked) {
+        termsError.textContent = "You must agree to the Terms and Conditions.";
+        termsError.style.display = "block";
+        isValid = false;
+      } else {
+        termsError.style.display = "none";
+      }
 
-            if (!isValid) return;
+      if (!isValid) return;
 
-            try {
-                await signInWithEmailAndPassword(auth, email, password);
-                resultDiv.style.color = "green";
-                resultDiv.innerHTML = "User Verified! Redirecting...";
-                signupBtn.style.display = "none"; 
-                setTimeout(() => {
-                    window.location.href = "forms.html";
-                }, 1200);
-            } catch (err) {
-                if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-                    resultDiv.innerHTML = "User not found! Please sign up first.";
-                    signupBtn.style.display = "inline-block";
-                    signupBtn.onclick = () => {
-                        window.location.href = "index.html";
-                    };
-                } else if (err.code === "auth/wrong-password") {
-                    passwordError.textContent = "Incorrect password.";
-                    passwordError.style.display = "block";
-                } else {
-                    resultDiv.innerHTML = `Error: ${err.message}`;
-                }
-            }
-        });
-    </script>
+      try {
+        await signInWithEmailAndPassword(auth, email, password);
+        resultDiv.style.color = "green";
+        resultDiv.innerHTML = "User Verified! Redirecting...";
+        signupBtn.style.display = "none";
+        btnContainer.classList.remove("two-buttons");
+        setTimeout(() => {
+          window.location.href = "forms.html";
+        }, 1200);
+      } catch (err) {
+        if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
+          resultDiv.innerHTML = "User not found! Please sign up first.";
+          signupBtn.style.display = "inline-block";
+          btnContainer.classList.add("two-buttons");
+          signupBtn.onclick = () => {
+            window.location.href = "index.html";
+          };
+        } else if (err.code === "auth/wrong-password") {
+          passwordError.textContent = "Incorrect password.";
+          passwordError.style.display = "block";
+        } else {
+          resultDiv.innerHTML = `Error: ${err.message}`;
+        }
+      }
+    });
+  </script>
 </body>
 </html>
