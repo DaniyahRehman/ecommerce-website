@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Registration Form</title>
+</head>
+<body>
+    <div class="container">
+        <h2>Login Form</h2>
+        <form id="registrationForm">
+
+            <label for="email">Email:</label>
+            <input type="email" id="email" name="email" required>
+            <small id="emailError" class="error"></small>
+
+
+            <label for="password">Password:</label>
+            <input type="password" id="password" name="password" required>
+            <small id="passwordError" class="error"></small>
+
+
+            <fieldset class="set-check">
+                <input type="checkbox" id="user_agree_to_terms" name="user[agree_to_terms]"> 
+                <label for="user_agree_to_terms"> 
+                'I agree with Styloopers '
+                <a target="_blank" href="/terms">Terms of Service</a>
+                ',
+                <a target="_blank" href="/privacy">Privacy Policy</a>
+                ', and default "
+                <a target="_blank" href="/notifications">Notification Settings</a>
+                </label>
+                </fieldset>
+            <button type="submit" href="forms.html" >Verify</button>
+        </form>
+        <div id="result"></div>
+    </div>
+<script>
+document.getElementById('registrationForm').addEventListener('submit', function(event) {
+    event.preventDefault();
+
+    var email = document.getElementById('email').value.trim();
+    var password = document.getElementById('password').value.trim();
+
+    var emailError = document.getElementById('emailError');
+    var passwordError = document.getElementById('passwordError');
+    var resultDiv = document.getElementById('result');
+
+    var isValid = true;
+
+    // Validate email
+    var emailPattern = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailPattern.test(email)) {
+        emailError.textContent = "Please enter a valid email address.";
+        emailError.style.display = "block";
+        isValid = false;
+    } else {
+        emailError.style.display = "none";
+    }
+
+    // Validate password
+    if (password.length < 8) {
+        passwordError.textContent = "Password must be at least 8 characters long.";
+        passwordError.style.display = "block";
+        isValid = false;
+    } else {
+        passwordError.style.display = "none";
+    }
+
+    // If all validations pass
+    if (isValid) {
+        // Show success message briefly
+        resultDiv.innerHTML = '<p style="color: green;">Form submitted successfully. Redirecting...</p>';
+        
+        // Redirect after a short delay so message is visible
+        setTimeout(function() {
+            window.location.href = "forms.html";
+        }, 1200);
+    }
+});
+</script>
+</body>
+</html>
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background-color: #89a8e7;
+        margin: 0;
+    }
+    
+    .container {
+        background: rgb(220, 239, 245);
+        padding: 20px 40px;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        width: 300px;
+        text-align: center;
+    }
+    
+    label {
+        margin: 0;
+    } 
+    
+    input[type="text"],
+    input[type="email"],
+    input[type="tel"],
+    input[type="password"] {
+        width: 100%;
+        padding: 8px;
+        margin-top: 5px;
+        margin-right: 14px;
+        align-items: center;
+        margin-bottom: 5px;
+        border: 1px solid #ccc;
+        border-radius: 4px;
+    }
+    
+    button {
+        padding: 10px 20px;
+        background-color: #007BFF;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+        margin-top: 15px;
+    }
+    
+    button:hover {
+        background-color: #0056b3;
+    }
+    
+    .error {
+        color: red;
+        font-size: 0.8em;
+        display: none;
+    }
+    
+    #result {
+        margin-top: 20px;
+        font-weight: bold;
+    }
+    .set-check{
+        border:none;
+        font-size: small;
+        font-weight: 300;
+    }
+    </style>
