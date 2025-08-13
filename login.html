@@ -151,7 +151,7 @@ document.getElementById('registrationForm').addEventListener('submit', function(
     }
     </style>
  -->
- <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -178,10 +178,10 @@ document.getElementById('registrationForm').addEventListener('submit', function(
         }
         
         label {
-            margin: 0;
             text-align: left;
             display: block;
             font-weight: bold;
+            margin-top: 10px;
         } 
         
         input[type="email"],
@@ -305,14 +305,21 @@ document.getElementById('registrationForm').addEventListener('submit', function(
 
             try {
                 await signInWithEmailAndPassword(auth, email, password);
-                resultDiv.innerHTML = '<p style="color: green;">User Verified! Redirecting...</p>';
+                resultDiv.innerHTML = '<p style="color: green;">✅ User Verified! Redirecting...</p>';
                 setTimeout(() => {
                     window.location.href = "forms.html";
                 }, 1200);
             } catch (err) {
                 if (err.code === "auth/user-not-found" || err.code === "auth/invalid-credential") {
-                    alert("User not found. Please sign up first.");
-                    window.location.href = "register.html";
+                    resultDiv.innerHTML = `
+                        <p style="color:red;">User not found. Please sign up first.</p>
+                        <button id="signupBtn" style="padding:8px 15px; margin-top:10px; background-color:#28a745; color:white; border:none; border-radius:4px; cursor:pointer;">
+                            Go to Sign Up
+                        </button>
+                    `;
+                    document.getElementById("signupBtn").addEventListener("click", () => {
+                        window.location.href = "register.html";
+                    });
                 } else if (err.code === "auth/wrong-password") {
                     passwordError.textContent = "Incorrect password.";
                     passwordError.style.display = "block";
@@ -320,7 +327,6 @@ document.getElementById('registrationForm').addEventListener('submit', function(
                     resultDiv.innerHTML = `<p style="color:red">Error: ${err.message}</p>`;
                 }
             }
-
         });
     </script>
 </body>
